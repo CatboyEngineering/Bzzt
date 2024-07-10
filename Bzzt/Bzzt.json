@@ -1,0 +1,13 @@
+{
+  "Author": "CatboyEngineering",
+  "Name": "Bzzt",
+  "Punchline": "Create reactions and make your toys go Bzzt!",
+  "Description": "Create reactions and make your toys go Bzzt!",
+  "Tags": [ "kink", "buttplug", "toys", "reactions", "triggers", "nsfw" ],
+  "InternalName": "Bzzt",
+  "RepoUrl": "https://github.com/CatboyEngineering/Bzzt",
+  "ApplicableVersion": "any",
+  "DalamudApiLevel": 10,
+  "LoadPriority": 0,
+  "AssemblyVersion": "0.0.0.1"
+}
