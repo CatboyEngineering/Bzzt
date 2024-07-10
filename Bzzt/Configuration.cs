@@ -18,9 +18,6 @@ namespace CatboyEngineering.Bzzt
         private readonly int CurrentVersion = 0;
 
         [NonSerialized]
-        public readonly string CaptchaToken = "DalamudClient";
-
-        [NonSerialized]
         private IDalamudPluginInterface PluginInterface;
 
         public void Initialize(IDalamudPluginInterface pluginInterface)
