@@ -11,6 +11,7 @@ namespace CatboyEngineering.Bzzt
         [PluginService] internal static IDalamudPluginInterface PluginInterface { get; private set; } = null!;
         [PluginService] internal static ICommandManager CommandManager { get; private set; } = null!;
         [PluginService] internal static IPluginLog Logger { get; private set; } = null!;
+        [PluginService] internal static IClientState ClientState { get; private set; } = null!;
 
         public Configuration Configuration { get; }
         public bool IsDev { get; set; }

@@ -15,6 +15,7 @@ namespace CatboyEngineering.Bzzt
         public ConfigWindow ConfigWindow { get; init; }
         public MainWindow MainWindow { get; init; }
         public PatternBuilderWindow PatternBuilderWindow { get; set; }
+        public TriggerWindow TriggerWindow { get; set; }
 
         public UIHandler(Plugin plugin, IDalamudPluginInterface pluginInterface)
         {
@@ -24,10 +25,12 @@ namespace CatboyEngineering.Bzzt
             ConfigWindow = new ConfigWindow(this.Plugin);
             MainWindow = new MainWindow(this.Plugin);
             PatternBuilderWindow = new PatternBuilderWindow(this.Plugin);
+            TriggerWindow = new TriggerWindow(this.Plugin);
 
             WindowSystem.AddWindow(ConfigWindow);
             WindowSystem.AddWindow(MainWindow);
             WindowSystem.AddWindow(PatternBuilderWindow);
+            WindowSystem.AddWindow(TriggerWindow);
 
             this.PluginInterface.UiBuilder.Draw += DrawUI;
             this.PluginInterface.UiBuilder.OpenConfigUi += DrawConfigUI;
@@ -56,6 +59,7 @@ namespace CatboyEngineering.Bzzt
             ConfigWindow.Dispose();
             MainWindow.Dispose();
             PatternBuilderWindow.Dispose();
+            TriggerWindow.Dispose();
         }
     }
 }

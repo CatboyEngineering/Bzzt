@@ -1,4 +1,5 @@
-﻿using CatboyEngineering.Bzzt.Models.Toy;
+﻿using CatboyEngineering.Bzzt.Models;
+using CatboyEngineering.Bzzt.Models.Toy;
 using Dalamud.Configuration;
 using Dalamud.Plugin;
 using System;
@@ -11,6 +12,7 @@ namespace CatboyEngineering.Bzzt
     {
         public string IntifaceServerAddress { get; set; } = "ws://localhost:12345";
         public List<StoredShellCommand> SavedPatterns { get; set; } = new List<StoredShellCommand>();
+        public List<Trigger> SavedTriggers { get; set; } = new List<Trigger>();
 
         public int Version { get; set; } = 0;
 
@@ -38,6 +40,7 @@ namespace CatboyEngineering.Bzzt
 
             clone.IntifaceServerAddress = this.IntifaceServerAddress;
             clone.SavedPatterns = this.SavedPatterns;
+            clone.SavedTriggers = this.SavedTriggers;
 
             return clone;
         }
@@ -46,6 +49,7 @@ namespace CatboyEngineering.Bzzt
         {
             this.IntifaceServerAddress = configuration.IntifaceServerAddress;
             this.SavedPatterns = configuration.SavedPatterns;
+            this.SavedTriggers = configuration.SavedTriggers;
         }
 
         private void PerformVersionUpdates()
