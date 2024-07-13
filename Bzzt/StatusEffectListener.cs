@@ -4,10 +4,13 @@ using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Hooking;
 using Dalamud.Utility.Signatures;
 using Lumina.Excel.GeneratedSheets;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 
 namespace CatboyEngineering.Bzzt
@@ -16,6 +19,7 @@ namespace CatboyEngineering.Bzzt
     public class StatusEffectListener : IDisposable
     {
         public Plugin Plugin { get; set; }
+        public uint PlayerID { get; set; }
 
         private delegate void ProcessPacketEffectResultDelegate(uint targetId, IntPtr actionIntegrityData, bool isReplay);
 
@@ -25,24 +29,35 @@ namespace CatboyEngineering.Bzzt
         public StatusEffectListener(Plugin plugin)
         {
             Plugin = plugin;
+            PlayerID = Plugin.ClientState.LocalPlayer.EntityId;
+
+            Plugin.GameInteropProvider.InitializeFromAttributes(this);
 
             processPacketEffectResultHook.Enable();
         }
 
         private void onStatusReceived(StatusEffect effect)
         {
+            Plugin.Logger.Debug($"User gained status {effect.Id}:{effect.Status}");
+
             foreach(var trigger in Plugin.Configuration.SavedTriggers)
             {
                 if(trigger.TriggerType == TriggerType.STATUS_RECEIVED)
                 {
-                    if(trigger.TriggerValue.Equals(effect.Id))
+                    if (((int)trigger.TriggerValue) == effect.Id)
                     {
+                        Plugin.Logger.Debug($"Dispatching pattern {trigger.PatternName}");
+
                         // Run the action
                         // TODO: Add safety checks: Is the user allowing commands, is a command running, which toy should this be sent to
                         var command = Plugin.Configuration.SavedPatterns.Find(sp => sp.Name.Equals(trigger.PatternName));
-                        var toy = Plugin.ToyController.ConnectedToys.First();
 
-                        _ = Plugin.ToyController.IssueCommand(toy, command);
+                        if (Plugin.ToyController.ConnectedToys.Count > 0)
+                        {
+                            var toy = Plugin.ToyController.ConnectedToys.First();
+
+                            _ = Plugin.ToyController.IssueCommand(toy, command);
+                        }
 
                         break;
                     }
@@ -58,7 +73,7 @@ namespace CatboyEngineering.Bzzt
             {
                 var message = (AddStatusEffect*)actionIntegrityData;
 
-                if (Plugin.ObjectTable.SearchById(targetId) is not IPlayerCharacter p)
+                if (targetId != PlayerID)
                 {
                     return;
                 }

@@ -10,14 +10,14 @@ namespace CatboyEngineering.Bzzt.Models
     {
         public Guid TriggerID { get; set; }
         public TriggerType TriggerType { get; set; }
-        public string TriggerValue { get; set; }
+        public XIVStatus TriggerValue { get; set; }
         public string PatternName { get; set; }
 
         public Trigger()
         {
             TriggerID = Guid.NewGuid();
             TriggerType = TriggerType.STATUS_RECEIVED;
-            TriggerValue = string.Empty;
+            TriggerValue = XIVStatus.VULNERABILITY_UP;
             PatternName = string.Empty;
         }
     }

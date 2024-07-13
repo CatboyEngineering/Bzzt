@@ -30,7 +30,7 @@ namespace CatboyEngineering.Bzzt.Windows
 
         public override void Draw()
         {   
-            ImGui.SetNextWindowSize(new Vector2(400, 600), ImGuiCond.Always);
+            ImGui.SetNextWindowSize(new Vector2(800, 500), ImGuiCond.Always);
 
             if (ImGui.Begin("Bzzt Triggers"))
             {
@@ -52,6 +52,13 @@ namespace CatboyEngineering.Bzzt.Windows
                 TriggerWindowUtilities.CreateNewTrigger(this);
             }
 
+            ImGui.SameLine();
+
+            if (ImGui.Button("Save"))
+            {
+                Plugin.Configuration.Save();
+            }
+
             var width = ImGui.GetWindowWidth();
             ImGui.BeginChild("TriggerList", new Vector2(width - 15, 500), true);
 
@@ -63,11 +70,16 @@ namespace CatboyEngineering.Bzzt.Windows
         private void DrawUITriggerList()
         {
             var triggerTypeList = Enum.GetNames(typeof(TriggerType));
+            var statusTypeList = Enum.GetNames(typeof(XIVStatus));
             var patternList = Plugin.Configuration.SavedPatterns.Select(sp => sp.Name).ToList();
 
             foreach (var triggerCopy in new List<Trigger>(Plugin.Configuration.SavedTriggers))
             {
-                if (ImGui.BeginCombo($"##selectType{triggerCopy.TriggerID}", "preview_value"))
+                var triggerTypePreview = triggerCopy.TriggerType.ToString();
+
+                ImGui.SetNextItemWidth(200);
+
+                if (ImGui.BeginCombo($"##selectType{triggerCopy.TriggerID}", triggerTypePreview))
                 {
                     for (int i = 0; i < triggerTypeList.Length; i++)
                     {
@@ -82,10 +94,31 @@ namespace CatboyEngineering.Bzzt.Windows
                 }
 
                 ImGui.SameLine();
-                ImGui.Text("Select value");
-                ImGui.SameLine();
 
-                if (ImGui.BeginCombo($"##selectPattern{triggerCopy.TriggerID}", "preview_value"))
+                var triggerValuePreview = triggerCopy.TriggerValue.ToString();
+
+                ImGui.SetNextItemWidth(200);
+
+                if (ImGui.BeginCombo($"##selectValue{triggerCopy.TriggerID}", triggerValuePreview))
+                {
+                    for (int i = 0; i < statusTypeList.Length; i++)
+                    {
+                        if (ImGui.Selectable(statusTypeList[i]))
+                        {
+                            var trigger = Plugin.Configuration.SavedTriggers.Find(st => st.TriggerID == triggerCopy.TriggerID);
+                            trigger.TriggerValue = Enum.Parse<XIVStatus>(statusTypeList[i]);
+                        }
+                    }
+
+                    ImGui.EndCombo();
+                }
+
+                ImGui.SameLine();
+                ImGui.SetNextItemWidth(200);
+
+                var patternPreview = triggerCopy.PatternName;
+
+                if (ImGui.BeginCombo($"##selectPattern{triggerCopy.TriggerID}", patternPreview))
                 {
                     for (int i = 0; i < patternList.Count; i++)
                     {

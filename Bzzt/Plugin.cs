@@ -1,4 +1,5 @@
 ﻿using CatboyEngineering.Bzzt.Toy;
+using Dalamud.Game;
 using Dalamud.Game.ClientState.Conditions;
 using Dalamud.IoC;
 using Dalamud.Plugin;
@@ -15,6 +16,8 @@ namespace CatboyEngineering.Bzzt
         [PluginService] internal static IPluginLog Logger { get; private set; } = null!;
         [PluginService] internal static IObjectTable ObjectTable { get; private set; } = null!;
         [PluginService] internal static IDataManager DataManager { get; private set; } = null!;
+        [PluginService] internal static IGameInteropProvider GameInteropProvider { get; private set; } = null!;
+        [PluginService] internal static IClientState ClientState { get; private set; } = null!;
 
         public Configuration Configuration { get; }
         public bool IsDev { get; set; }
@@ -38,7 +41,6 @@ namespace CatboyEngineering.Bzzt
             UIHandler = new UIHandler(this, PluginInterface);
 
             ToyController = new ToyController(this);
-
             StatusEffectListener = new StatusEffectListener(this);
         }
 

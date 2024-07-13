@@ -8,8 +8,6 @@ namespace CatboyEngineering.Bzzt.Models
 {
     public enum TriggerType
     {
-        STATUS_RECEIVED,
-        ACTION_CAST,
-        CHAT_RECEIVED
+        STATUS_RECEIVED
     }
 }

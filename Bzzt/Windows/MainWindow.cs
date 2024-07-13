@@ -14,7 +14,7 @@ namespace CatboyEngineering.Bzzt.Windows
 
         public MainWindowState State { get; init; }
 
-        public MainWindow(Plugin plugin) : base("Bzzt", ImGuiWindowFlags.NoResize)
+        public MainWindow(Plugin plugin) : base($"Bzzt v{Plugin.Version}", ImGuiWindowFlags.NoResize)
         {
             this.Plugin = plugin;
             State = new MainWindowState(plugin);
