@@ -20,10 +20,15 @@ namespace CatboyEngineering.Bzzt.Windows
             State = new MainWindowState(plugin);
         }
 
-        public override void OnClose()
+        public override void OnOpen()
         {
-            base.OnClose();
-            DisconnectAll();
+            base.OnOpen();
+
+            if (!Plugin.Configuration.IntifaceServerAddress.IsNullOrEmpty() && !Plugin.ToyController.IsConnected())
+            {
+                var task = Plugin.ToyController.Connect();
+                _ = MainWindowUtilities.HandleWithIndicator(State, task);
+            }
         }
 
         public override void Draw()
@@ -44,9 +49,15 @@ namespace CatboyEngineering.Bzzt.Windows
         {
             if (!Plugin.Configuration.IntifaceServerAddress.IsNullOrEmpty())
             {
-                if (!Plugin.ToyController.IsConnected())
+                if (State.isRequestInFlight)
                 {
-                    DrawUIWindowReadyToConnect();
+                    ImGui.Text("Connecting to Intiface...");
+                }
+                else if(!Plugin.ToyController.IsConnected())
+                {
+                    ImGui.Text("Please ensure Intiface is running");
+                    ImGui.Text("before reconnecting.");
+                    DrawUIReconnectButton();
                 }
                 else
                 {
@@ -74,41 +85,20 @@ namespace CatboyEngineering.Bzzt.Windows
             DrawUISettingsButton();
         }
 
-        private void DrawUIWindowReadyToConnect()
-        {
-            var text = "Press the button below to connect.";
-
-            var windowWidth = ImGui.GetWindowSize().X;
-            var textWidth = ImGui.CalcTextSize(text).X;
-
-            ImGui.SetCursorPosX((windowWidth - textWidth) * 0.5f);
-            ImGui.Text(text);
-
-            var settingsTextWidth = ImGui.CalcTextSize("Connect").X;
-            ImGui.SetCursorPosX((windowWidth - settingsTextWidth) * 0.5f);
-            DrawUIConnectButton();
-
-            ImGui.Spacing();
-
-            if(ImGui.Button("Pattern Builder"))
-            {
-                Plugin.UIHandler.PatternBuilderWindow.IsOpen = true;
-            }
-
-            ImGui.SameLine();
-
-            if (ImGui.Button("Open Config"))
-            {
-                Plugin.UIHandler.ConfigWindow.IsOpen = true;
-            }
-        }
-
         private void DrawUIWindowLoggedInHomepage()
         {
             var welcomeText = $"Welcome to Bzzt!";
 
             DrawUICenteredText(welcomeText);
             DrawUITriggerWindowButton();
+
+            ImGui.SameLine();
+
+            if (ImGui.Button("Pattern Builder"))
+            {
+                Plugin.UIHandler.PatternBuilderWindow.IsOpen = true;
+            }
+
             DrawUIConnectedToys();
             DrawUIDisconnectButton();
         }
@@ -162,11 +152,11 @@ namespace CatboyEngineering.Bzzt.Windows
             }
         }
 
-        private void DrawUIConnectButton()
+        private void DrawUIReconnectButton()
         {
             if (!State.isRequestInFlight)
             {
-                if (ImGui.Button("Connect"))
+                if (ImGui.Button("Reconnect"))
                 {
                     var task = Plugin.ToyController.Connect();
                     _ = MainWindowUtilities.HandleWithIndicator(State, task);
