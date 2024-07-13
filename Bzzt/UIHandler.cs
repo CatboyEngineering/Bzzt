@@ -47,6 +47,11 @@ namespace CatboyEngineering.Bzzt
             MainWindow.IsOpen = true;
         }
 
+        public void OpenTriggerWindow()
+        {
+            TriggerWindow.IsOpen = true;
+        }
+
         public void DrawConfigUI()
         {
             ConfigWindow.IsOpen = true;

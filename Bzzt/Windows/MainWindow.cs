@@ -108,6 +108,7 @@ namespace CatboyEngineering.Bzzt.Windows
             var welcomeText = $"Welcome to Bzzt!";
 
             DrawUICenteredText(welcomeText);
+            DrawUITriggerWindowButton();
             DrawUIConnectedToys();
             DrawUIDisconnectButton();
         }
@@ -197,6 +198,14 @@ namespace CatboyEngineering.Bzzt.Windows
             if (ImGui.Button("Settings"))
             {
                 Plugin.UIHandler.DrawConfigUI();
+            }
+        }
+
+        private void DrawUITriggerWindowButton()
+        {
+            if (ImGui.Button("Triggers"))
+            {
+                Plugin.UIHandler.OpenTriggerWindow();
             }
         }
 
