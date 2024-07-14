@@ -5,3 +5,6 @@
 
 ## Bzzt: Trigger Warning
 Welcome to **Bzzt** - a trigger-based adult toy reaction mod for XIV. Configure commands to send to your device when certain in-game actions occur.
+
+### Getting Started
+Visit the [Wiki](https://github.com/CatboyEngineering/Bzzt/wiki/Using-Bzzt) to get started!
