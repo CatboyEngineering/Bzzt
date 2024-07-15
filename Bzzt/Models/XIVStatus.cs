@@ -16,6 +16,7 @@ namespace CatboyEngineering.Bzzt.Models
         SPRINT = 50,
         VULNERABILITY_DOWN = 55,
         VULNERABILITY_UP = 56,
+        DAMAGE_DOWN = 62,
         REGEN = 158,
         LEY_LINES = 737
     }
