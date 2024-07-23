@@ -29,6 +29,12 @@ namespace CatboyEngineering.Bzzt
         public StatusEffectListener(Plugin plugin)
         {
             Plugin = plugin;
+
+            Plugin.ClientState.Login += Initialize;
+        }
+
+        private void Initialize()
+        {
             PlayerID = Plugin.ClientState.LocalPlayer.EntityId;
 
             Plugin.GameInteropProvider.InitializeFromAttributes(this);
