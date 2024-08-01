@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<Product>Bzzt</Product>
-		<Version>0.0.0.3</Version>
+		<Version>0.0.0.4</Version>
 		<Description>Create reactions and make your toys go Bzzt!</Description>
 		<PackageProjectUrl>https://github.com/CatboyEngineering/Bzzt</PackageProjectUrl>
 		<Copyright>Copyright CatboyEngineering 2024</Copyright>

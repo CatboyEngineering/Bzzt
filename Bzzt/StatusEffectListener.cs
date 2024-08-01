@@ -31,24 +31,23 @@ namespace CatboyEngineering.Bzzt
             Plugin = plugin;
 
             Plugin.ClientState.Login += Initialize;
+
+            Plugin.GameInteropProvider.InitializeFromAttributes(this);
+            processPacketEffectResultHook.Enable();
         }
 
         private void Initialize()
         {
             PlayerID = Plugin.ClientState.LocalPlayer.EntityId;
-
-            Plugin.GameInteropProvider.InitializeFromAttributes(this);
-
-            processPacketEffectResultHook.Enable();
         }
 
         private void onStatusReceived(StatusEffect effect)
         {
             Plugin.Logger.Debug($"User gained status {effect.Id}:{effect.Status}");
 
-            foreach(var trigger in Plugin.Configuration.SavedTriggers)
+            foreach (var trigger in Plugin.Configuration.SavedTriggers)
             {
-                if(trigger.TriggerType == TriggerType.STATUS_RECEIVED)
+                if (trigger.TriggerType == TriggerType.STATUS_RECEIVED)
                 {
                     if (((int)trigger.TriggerValue) == effect.Id)
                     {
