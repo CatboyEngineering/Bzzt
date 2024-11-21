@@ -1,5 +1,4 @@
 ﻿using Buttplug.Client;
-using Buttplug.Client.Connectors.WebsocketConnector;
 using Buttplug.Core.Messages;
 using CatboyEngineering.Bzzt.Models.Toy;
 using System;

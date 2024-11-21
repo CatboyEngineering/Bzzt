@@ -14,22 +14,5 @@ namespace CatboyEngineering.Bzzt
         {
             return str.Payloads.Aggregate("", (a, p) => p is TextPayload ? a + p.RawString : a);
         }
-
-        public static string Demangle(this string name)
-        {
-            if (!name.StartsWith("_rsv_"))
-                return name;
-
-            unsafe
-            {
-                var demangled = LayoutWorld.Instance()->RsvMap[0][new Utf8String(name)];
-                if (demangled.Value != null && Marshal.PtrToStringUTF8((IntPtr)demangled.Value) is { } result)
-                {
-                    return result;
-                }
-            }
-
-            return name;
-        }
     }
 }

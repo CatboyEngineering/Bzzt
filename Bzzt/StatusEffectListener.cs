@@ -1,17 +1,12 @@
 ﻿using CatboyEngineering.Bzzt.Models;
 using CatboyEngineering.Bzzt.Models.StatusEffects;
-using Dalamud.Game.ClientState.Objects.SubKinds;
 using Dalamud.Hooking;
 using Dalamud.Utility.Signatures;
-using Lumina.Excel.GeneratedSheets;
+using Lumina.Excel.Sheets;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.Json.Nodes;
-using System.Threading.Tasks;
 
 namespace CatboyEngineering.Bzzt
 {
@@ -101,15 +96,17 @@ namespace CatboyEngineering.Bzzt
                         continue;
                     }
 
+                    Plugin.Logger.Debug(JsonConvert.SerializeObject(effect));
+
                     var source = Plugin.ObjectTable.SearchById(effect.SourceActorId)?.Name.TextValue;
-                    var status = Plugin.DataManager.Excel.GetSheet<Status>()?.GetRow(effectId);
+                    var status = Plugin.DataManager.GetExcelSheet<Status>()?.GetRowOrDefault(effectId);
 
                     var statusEffect = new StatusEffect
                     {
                         Id = effectId,
                         StackCount = effect.StackCount <= status?.MaxStacks ? effect.StackCount : 0u,
-                        Status = status?.Name.RawString.Demangle(),
-                        Description = status?.Description.DisplayedText().Demangle(),
+                        Status = status?.Name.ExtractText(),
+                        Description = status?.Description.ExtractText(),
                         Source = source,
                         Duration = effect.Duration
                     };

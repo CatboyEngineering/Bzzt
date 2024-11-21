@@ -7,7 +7,7 @@
   "InternalName": "Bzzt",
   "RepoUrl": "https://github.com/CatboyEngineering/Bzzt",
   "ApplicableVersion": "any",
-  "DalamudApiLevel": 10,
+  "DalamudApiLevel": 11,
   "LoadPriority": 0,
-  "AssemblyVersion": "0.0.0.4"
+  "AssemblyVersion": "0.0.0.5"
 }

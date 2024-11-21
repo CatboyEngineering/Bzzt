@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<Product>Bzzt</Product>
-		<Version>0.0.0.4</Version>
+		<Version>0.0.0.5</Version>
 		<Description>Create reactions and make your toys go Bzzt!</Description>
 		<PackageProjectUrl>https://github.com/CatboyEngineering/Bzzt</PackageProjectUrl>
 		<Copyright>Copyright CatboyEngineering 2024</Copyright>
@@ -10,7 +10,6 @@
 	<Import Project="dalamud.props" />
 
 	<ItemGroup>
-		<PackageReference Include="Buttplug" Version="3.0.1" />
-		<PackageReference Include="Buttplug.Client.Connectors.WebsocketConnector" Version="3.0.1" />
+		<PackageReference Include="Buttplug" Version="4.0.0" />
 	</ItemGroup>
 </Project>
